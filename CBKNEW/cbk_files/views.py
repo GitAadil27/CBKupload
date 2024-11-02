@@ -52,7 +52,7 @@ def banque_misr_upload(request):
             original_filename = os.path.splitext(file.name)[0]
             # Generate response for download
             response = HttpResponse(processed_file, content_type='text/plain')
-            response['Content-Disposition'] = f'attachment; filename="{original_filename}_processed.txt"'
+            response['Content-Disposition'] = f'attachment; filename="{original_filename}"'
             return response
     else:
         bm_form = BanqueMisrUploadForm()
