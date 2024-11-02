@@ -4,3 +4,4 @@ psycopg2-binary
 pillow
 whitenoise == 6.8.2
 gunicorn
+Pandas
