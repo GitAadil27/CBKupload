@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBK File Verification Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Global Layout */
+        body { background-color: #f5f5f5; min-height: 100vh; display: flex; flex-direction: column; }
+        .container { flex: 1; } /* Allows main content to push footer to bottom */
+
+        /* Navbar Styling */
+        .navbar-custom { background-color: #213871; color: white; }
+        .navbar-brand { font-size: 30px; font-weight: bolder; color: white !important; text-align: center; }
+        .nav-icons { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); }
+        .nav-icons i { color: white; font-size: 25px; margin-left: 15px; cursor: pointer; }
+        .nav-icons i:hover { color: #ffcc00; transform: scale(1.2); }
+        .active-icon { color: #ffcc00 !important; } /* Keep active icon golden */
+
+        /* File Upload Styling */
+        .file-upload-box { background-color: white; padding: 40px; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); text-align: center; }
+        .btn-outline-primary { color: #213871; border: 1px solid #213871; }
+        .btn-outline-primary:hover { background-color: #213871; color: white; }
+        .verify-button { width : 380px;font-weight: 200;  background-color: #213871; color: white; border: none; padding: 10px 60px; border-radius: 5px; cursor: pointer; }
+        .verify-button:hover { font-weight:bolder;  color: #28a745; width: 380px; }
+
+        /* Output Container Styling */
+        .output-container { background-color: #f0f0f0; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-top: 20px; }
+        .output-item { font-weight: bold; padding: 5px 0; }
+
+        /* Footer Styling */
+        .footer-custom { background-color: #213871; color: white; text-align: center; padding: 10px; width: 100%; margin-top: auto; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background-color: #28a745; color: white; padding: 15px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); display: none; }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand mx-auto" href="#">CBK File Verification Portal</a>
+        <div class="nav-icons ml-auto">
+            <i class="fa fa-university" id="cityTab" aria-hidden="true"></i>
+            <i class="fa fa-first-order" id="banqueTab" aria-hidden="true"></i>
+        </div>
+    </div>
+</nav>
+
+<!-- File Upload Section -->
+<div class="container file-upload-box">
+    <div class="tab-content" id="uploadTabsContent">
+
+        <!-- City Monthly File Upload Tab -->
+        <div class="tab-pane fade show active" id="upload-section" role="tabpanel">
+            <h1>Upload Your City Monthly Files</h1>
+            <form method="post" enctype="multipart/form-data" action="{% url 'upload_file' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <!-- File Inputs (1A to 7) -->
+                    <div class="row mb-3">
+                        <div class="col-8"><p>Check the CBK File 1A</p></div>
+                        <div class="col-4"><input type="file" name="file1A" class="btn btn-outline-primary btn-block" required></div>
+                    </div>
+
+                        <!-- File 1B -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File 1B</p></div>
+                            <div class="col-4"><input type="file" name="file1B" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- File 1B1 -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File 1B1</p></div>
+                            <div class="col-4"><input type="file" name="file1B1" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- File C2 -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File C2</p></div>
+                            <div class="col-4"><input type="file" name="fileC2" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- File 4A -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File 4A</p></div>
+                            <div class="col-4"><input type="file" name="file4A" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- File 4B -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File 4B</p></div>
+                            <div class="col-4"><input type="file" name="file4B" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- File 5A -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File 5A</p></div>
+                            <div class="col-4"><input type="file" name="file5A" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- File 5B -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File 5B</p></div>
+                            <div class="col-4"><input type="file" name="file5B" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- File 5C -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File 5C</p></div>
+                            <div class="col-4"><input type="file" name="file5C" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- File 6 -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File 6</p></div>
+                            <div class="col-4"><input type="file" name="file6" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- File 7 -->
+                        <div class="row mb-3">
+                            <div class="col-8"><p>Check the CBK File 7</p></div>
+                            <div class="col-4"><input type="file" name="file7" class="btn btn-outline-primary btn-block" required></div>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" name="upload_file" class="verify-button">Verify</button>
+                    </div>
+                </form>
+    
+                <!-- Display verification results -->
+                {% if output %}
+                    <div class="output-container">
+                        <h3>Verification Results</h3>
+                        <div>
+                            {% for result in output %}
+                                <div class="output-item">{{ result }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="mt-4"><p>No results to display. Please ensure all files are uploaded.</p></div>
+                {% endif %}
+            </div>
+    
+            <!-- Banque Misr File Upload Tab -->
+            <div class="tab-pane fade" id="download-section" role="tabpanel">
+                <h1>Upload Your Banque Misr Files</h1>
+                <form method="post" enctype="multipart/form-data" action="{% url 'banque_misr_upload' %}">
+                    {% csrf_token %}
+                    {{ bm_form.as_p }}
+                    <button type="submit" name="banque_misr_upload" class="verify-button">Upload and Generate File</button>
+                </form>
+                {% if bm_output %}
+                    <div>
+                        <h3>Processed Banque Misr Data:</h3>
+                        <div class="output-container">
+                            <div class="output-item">{{ bm_output }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toastMessage" class="toast">File downloaded successfully. Please check your downloads folder.</div>
+    
+    <footer class="footer-custom">
+        <p>Developed By Karina and Aadil exclusively For City International Exchange</p>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Tab and icon switching logic
+        document.getElementById("cityTab").addEventListener("click", function() {
+            document.getElementById("upload-section").classList.add("show", "active");
+            document.getElementById("download-section").classList.remove("show", "active");
+            this.classList.add("active-icon");
+            document.getElementById("banqueTab").classList.remove("active-icon");
+        });
+    
+        document.getElementById("banqueTab").addEventListener("click", function() {
+            document.getElementById("download-section").classList.add("show", "active");
+            document.getElementById("upload-section").classList.remove("show", "active");
+            this.classList.add("active-icon");
+            document.getElementById("cityTab").classList.remove("active-icon");
+        });
+    
+        // Show toast notification for file download
+        document.querySelector("form[action='{% url 'banque_misr_upload' %}']").addEventListener("submit", function(event) {
+            setTimeout(function() {
+                document.getElementById("toastMessage").style.display = "block";
+                setTimeout(function() {
+                    document.getElementById("toastMessage").style.display = "none";
+                }, 3000);
+            }, 500);
+        });
+    </script>
+    </body>
+    </html>
