@@ -48,6 +48,7 @@ def compare_4B_5B(file4B,  file5B):
     field_5B = 0
     for idx in range(total_rows):
         field_5B += sum(df5B.iloc[idx,6:])
+    field_5B = field_5B.round(3)
     if field_4B !=  field_5B:
         str_to_return = 'Sorry your 4B ' + str(field_4B) + ' is not equal to field 5B ' + str(field_5B)
     else:
@@ -74,7 +75,7 @@ def compare_4B_7(file4B, file7):
     print(df4B.iloc[:,8])
     total_remittances_4B = sum(df4B.iloc[:,5])
     total_remittances_7 = df7.iloc[0,6]
-    #print(total_remittances_7)
+    total_remittances_4B = round(total_remittances_4B, 3)
     if total_remittances_4B != total_remittances_7:
         str_to_return = 'Sorry. Total remittances based on 4B ' +  str(total_remittances_4B) + ' is not equal to total in 7 ' +  str(total_remittances_7)
     else:
